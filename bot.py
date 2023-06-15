@@ -79,6 +79,7 @@ async def login_handler(callback: types.CallbackQuery) -> None:
         await start_command(callback.message)
 
 
+        
 @dp.message_handler(content_types='text')
 async def any_text_command(message: types.Message):
     await help_command(message)
