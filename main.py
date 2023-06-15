@@ -1,27 +1,48 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from aiogram import types, Dispatcher, Bot
+from bot import dp, bot
+from config import TELEGRAM_BOT_TOKEN, WEBHOOK_URL
+import uvicorn
 
 app = FastAPI()
-
-class Msg(BaseModel):
-    msg: str
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World. Welcome to FastAPI!"}
+WEBHOOK_PATH = f"/bot/{TELEGRAM_BOT_TOKEN}"
+WEBHOOK_URL = f"{WEBHOOK_URL}{WEBHOOK_PATH}"
 
 
-@app.get("/path")
-async def demo_get():
-    return {"message": "This is /path endpoint, use a post request to transform the text to uppercase"}
+@app.on_event("startup")
+async def on_startup():
+    webhook_info = await bot.get_webhook_info()
+    if webhook_info.url != WEBHOOK_URL:
+        await bot.set_webhook(
+            url=WEBHOOK_URL
+        )
 
 
-@app.post("/path")
-async def demo_post(inp: Msg):
-    return {"message": inp.msg.upper()}
+@app.post(WEBHOOK_PATH)
+async def bot_webhook(update: dict):
+    telegram_update = types.Update(**update)
+    Dispatcher.set_current(dp)
+    Bot.set_current(bot)
+    await dp.process_update(telegram_update)
 
 
-@app.get("/path/{path_id}")
-async def demo_get_path_id(path_id: int):
-    return {"message": f"This is /path/{path_id} endpoint, use post request to retrieve result"}
+@app.get('/applicants/{applicant_id}')
+async def get_applicants(applicant_id: int):
+    return {'message': applicant_id}
+
+
+@app.post('/webhooks/{chat_id}')
+async def get_applicants(chat_id: int, payload: str):
+
+    await bot.send_message(chat_id=chat_id, text=payload)
+    return {f'{chat_id}: {payload}'}
+
+
+@app.on_event("shutdown")
+async def on_shutdown():
+    session = await bot.get_session()
+    await session.close()
+
+
+if __name__ == "__main__":
+    uvicorn.run(app)
