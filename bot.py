@@ -40,7 +40,7 @@ async def start_command(message: types.Message):
                                        "\n\n<em>Please select a language</em>",
                                reply_markup=lang, parse_mode='HTML')
     chat_id = message['chat']['id']
-    await message.answer(chat_id)
+ 
 
 
 
