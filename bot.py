@@ -1,93 +1,88 @@
-from config import TELEGRAM_BOT_TOKEN
-from keyboards import ikb, lang, ru_ikb, uz_ikb
+import os
+from dotenv import load_dotenv
+from keyboard.keyboards import lang, ru_btn
 import logging
 from aiogram import Bot, Dispatcher, types
-from aiogram.utils.helper import HelperMode
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters.state import State, StatesGroup
-from aiogram.types import InputMediaPhoto
-from aiogram.utils import executor
+from schemas.db import add_user, get_token, database
+from handlers.handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, text, main_page
+import pymongo.errors
+
+load_dotenv()
 
 HELP_COMMAND = """
 /start - Start the bot
 /help - Commands list
 """
-storage = MemoryStorage()
-bot = Bot(TELEGRAM_BOT_TOKEN)
+bot_token = os.getenv('TELEGRAM_TOKEN')
+
+bot = Bot(bot_token)
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
-
-logging.basicConfig(level=logging.INFO)
-
-
-class User(StatesGroup):
-    mode = HelperMode.snake_case
-    start = State()
-    lang_us = State()
-    lang_uz = State()
-    lang_ru = State()
-    chat_id = State()
+logging.basicConfig(filename='bot.log', level=logging.INFO, format='%(levelname)s - %(asctime)s - %(message)s')
 
 
-@dp.message_handler(state='*', commands=['start'])
+@dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    user = message['chat']['first_name']
+    token_get = await get_token(message.chat.id)
     await message.delete()
-    await message.answer_photo(photo='https://oneapp.ly/images/oa.png',
-                               caption=f"👋🏻Hi <b>{user}!</b>\n🔹Welcome to OneApply bot!🔹"
-                                       "\n\n<em>Please select a language</em>",
-                               reply_markup=lang, parse_mode='HTML')
-    chat_id = message['chat']['id']
- 
+    try:
+        token = token_get['token']
+        await main_page(token, message)
+    except KeyError:
+        user = message.chat.first_name
+        await message.answer_photo(photo="AgACAgIAAxkBAAIBSmSNjPd_gFQfDlzl6R4QOL"
+                                         "4uRNDNAAJfyTEbYsVoSDNlNDosiUMmAQADAgADeAADLwQ",
+                                   caption=f"👋🏻Добро пожаловать <b>{user}!</b>\n\nЯ помогу вам разместить вакансию "
+                                           f"прямо из телеграма "
+                                           "\nУпрощаем ваш найм с OneApp!"
+                                           "\nНичего лишнего, только результат"
+                                           "\n\n<em>Выберите язык</em>",
+                                   reply_markup=lang, parse_mode='HTML')
+        try:
+            await add_user(chat_id=message.chat.id, username=message.from_user.username,
+                           lang_code=message.from_user.language_code)
+        except pymongo.errors.DuplicateKeyError:
+            pass
 
 
-
-@dp.callback_query_handler(lambda callback_query: callback_query.data.startswith('btn'))
-async def login_handler(callback: types.CallbackQuery) -> None:
-    if callback.data == 'btn_us':
-        await callback.message.edit_media(media=InputMediaPhoto(media="https://oneapp.ly/_next/static/media"
-                                                                      "/howWorksEmp1.726b8e51.png"))
-        await callback.message.edit_caption('Thank you for choosing 🇺🇸\n'
-                                            'Let me help you, you can post your vacancy from here 🧾\n'
-                                            'Just click on the button below🔽\n\n'
-                                            '🤔If you want more info about my features, click on Instructions')
-        await callback.message.edit_reply_markup(ikb)
-
-    if callback.data == 'btn_ru':
-        await callback.message.edit_media(media=InputMediaPhoto(media="https://oneapp.ly/_next/static/media"
-                                                                      "/howWorksEmp1.726b8e51.png"))
-        await callback.message.edit_caption('Спасибо за выбор 🇷🇺\n'
-                                            'Позвольте мне вам помочь, тут вы можете разместить свою вакансию 🧾\n'
-                                            'Вам нужно будет всего лишь нажать на кнопку под описанием🔽\n\n'
-                                            '🤔Если же хотите ознакомиться с полной инструкцией нажмите на Инструкции')
-        await callback.message.edit_reply_markup(ru_ikb)
-
-    if callback.data == 'btn_uz':
-        await callback.message.edit_media(media=InputMediaPhoto(media="https://oneapp.ly/_next/static/media"
-                                                                      "/howWorksEmp1.726b8e51.png"))
-        await callback.message.edit_caption('Tanlaganiz uchun rahmat 🇺🇿\n'
-                                            'Sizga yordam beraman, shu yerda o\'z Vakansiyangizni joylashingiz '
-                                            'mumkin🧾\n'
-                                            'Siz faqatgina pastdagi tugmasini bosishiz kerak🔽\n\n'
-                                            '🤔Agar esa butunlay koʻrsatma bilan tanishmoqchi boʻlsangiz Koʻrsatma '
-                                            'tugmasini bosing')
-        await callback.message.edit_reply_markup(uz_ikb)
-
-    if callback.data == 'btn_back':
-        await start_command(callback.message)
+@dp.callback_query_handler(text_startswith='btn')
+async def login_handler(callback: types.CallbackQuery):
+    if callback.data == 'btn_c':
+        await callback.message.delete()
+    if callback.data == 'btn_v':
+        await bot.send_chat_action(callback.message.chat.id, action='typing')
+        await vacancies(callback=callback)
+    if callback.data == "btn_b":
+        await callback.message.delete()
+        await vacancies(callback=callback)
 
 
-        
-@dp.message_handler(content_types='text')
-async def any_text_command(message: types.Message):
-    await help_command(message)
+@dp.callback_query_handler(text='ru')
+async def lang_select(callback: types.CallbackQuery):
+    await ru_btn(callback=callback)
 
 
-@dp.message_handler(commands=['cancel'])
-async def help_command(message: types.Message, state: FSMContext):
-    await state.finish()
+@dp.callback_query_handler(lambda callback_query: callback_query.data.startswith('$'))
+async def applicant_handler(callback: types.CallbackQuery):
+    await applicants_list(applicants=await applicants_get(callback=callback, slug=callback.data), callback=callback)
+
+
+@dp.callback_query_handler(lambda callback_query: callback_query.data.startswith('next'))
+async def next_page_handler(callback: types.CallbackQuery):
+    await next_page(callback=callback)
+
+
+@dp.callback_query_handler(lambda callback_query: callback_query.data.startswith('prev'))
+async def prev_page_handler(callback: types.CallbackQuery):
+    await prev_page(callback=callback)
+
+
+@dp.message_handler(content_types=['web_app_data'])
+async def web_app(message: types.Message):
+    data = message.web_app_data
+    token = data.data.strip("\"")
+    await main_page(token, message)
 
 
 @dp.message_handler(commands=['help'])
