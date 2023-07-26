@@ -1,10 +1,10 @@
 import os
-from keyboard.keyboards import lang, ru_btn
+from keyboards import lang, ru_btn
 import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
-from schemas.db import add_user, get_token, database
-from handlers.handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, text, main_page
+from db import add_user, get_token, database
+from handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, text, main_page
 import pymongo.errors
 
 
