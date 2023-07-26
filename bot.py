@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 from keyboard.keyboards import lang, ru_btn
 import logging
 from aiogram import Bot, Dispatcher, types
@@ -8,13 +7,12 @@ from schemas.db import add_user, get_token, database
 from handlers.handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, text, main_page
 import pymongo.errors
 
-load_dotenv()
 
 HELP_COMMAND = """
 /start - Start the bot
 /help - Commands list
 """
-bot_token = os.getenv('TELEGRAM_TOKEN')
+bot_token = env('TELEGRAM_TOKEN')
 
 bot = Bot(bot_token)
 dp = Dispatcher(bot, storage=storage)
