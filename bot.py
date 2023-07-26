@@ -1,6 +1,7 @@
 import os
 from keyboards import lang, ru_btn
 import logging
+from config import TOKEN
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from db import add_user, get_token, database
@@ -12,7 +13,7 @@ HELP_COMMAND = """
 /start - Start the bot
 /help - Commands list
 """
-bot_token = env('TELEGRAM_TOKEN')
+bot_token = TOKEN
 
 bot = Bot(bot_token)
 dp = Dispatcher(bot, storage=storage)
