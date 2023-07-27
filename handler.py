@@ -3,13 +3,9 @@ import requests
 from aiogram.utils import exceptions
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.types.web_app_info import WebAppInfo
-from schemas.db import get_token, database
+from db import get_token, database
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
 storage = MemoryStorage()
 
 
@@ -63,7 +59,7 @@ text = []
 
 async def main_page(token, message):
     ikb = InlineKeyboardMarkup(row_width=3)
-    url = os.getenv('CREATE_VACANCY')
+    url = .env('CREATE_VACANCY')
     post_button = InlineKeyboardButton(text="Разместить вакансию",
                                        web_app=WebAppInfo(url=f'{url}{token}'))
     applicants_button = InlineKeyboardButton(text="Мои публикации", callback_data='btn_v')
