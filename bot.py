@@ -1,4 +1,4 @@
-import os
+
 from keyboards import lang, ru_btn
 import logging
 from config import TOKEN
@@ -13,7 +13,7 @@ HELP_COMMAND = """
 /start - Start the bot
 /help - Commands list
 """
-bot_token = TOKEN
+bot_token = env('TELEGRAM_TOKEN')
 
 bot = Bot(bot_token)
 dp = Dispatcher(bot, storage=storage)
