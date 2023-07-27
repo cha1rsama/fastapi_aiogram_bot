@@ -7,14 +7,14 @@ from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from db import add_user, get_token, database
 from handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, text, main_page
 import pymongo.errors
-
+import os
 
 HELP_COMMAND = """
 /start - Start the bot
 /help - Commands list
 """
-
-bot = Bot(TELEGRAM_TOKEN)
+token = os.environ.get("TELEGRAM_TOKEN")
+bot = Bot(token)
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
 logging.basicConfig(filename='bot.log', level=logging.INFO, format='%(levelname)s - %(asctime)s - %(message)s')
