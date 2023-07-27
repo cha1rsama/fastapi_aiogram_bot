@@ -13,9 +13,8 @@ HELP_COMMAND = """
 /start - Start the bot
 /help - Commands list
 """
-bot_token = env('TELEGRAM_TOKEN')
 
-bot = Bot(bot_token)
+bot = Bot(TELEGRAM_TOKEN)
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
 logging.basicConfig(filename='bot.log', level=logging.INFO, format='%(levelname)s - %(asctime)s - %(message)s')
