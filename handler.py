@@ -6,6 +6,7 @@ from aiogram.types.web_app_info import WebAppInfo
 from db import get_token, database
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
+import os
 storage = MemoryStorage()
 
 
@@ -59,7 +60,7 @@ text = []
 
 async def main_page(token, message):
     ikb = InlineKeyboardMarkup(row_width=3)
-    url = CREATE_VACANCY
+    url = os.environ.get("CREATE_VACANCY")
     post_button = InlineKeyboardButton(text="Разместить вакансию",
                                        web_app=WebAppInfo(url=f'{url}{token}'))
     applicants_button = InlineKeyboardButton(text="Мои публикации", callback_data='btn_v')
