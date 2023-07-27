@@ -1,7 +1,6 @@
 
 from keyboards import lang, ru_btn
 import logging
-from config import TOKEN
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from db import add_user, get_token, database
