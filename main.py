@@ -5,7 +5,8 @@ from config import  WEBHOOK_URL
 import uvicorn
 
 app = FastAPI()
-WEBHOOK_PATH = f"/bot/{os.environ.get("TELEGRAM_TOKEN")}"
+token = os.environ.get("TELEGRAM_TOKEN")
+WEBHOOK_PATH = f"/bot/{token}"
 WEBHOOK_URL = f"{WEBHOOK_URL}{WEBHOOK_PATH}"
 
 
