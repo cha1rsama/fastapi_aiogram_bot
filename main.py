@@ -3,7 +3,7 @@ from aiogram import types, Dispatcher, Bot
 from bot import dp, bot
 from config import  WEBHOOK_URL
 import uvicorn
-
+import os
 app = FastAPI()
 token = os.environ.get("TELEGRAM_TOKEN")
 WEBHOOK_PATH = f"/bot/{token}"
