@@ -59,7 +59,7 @@ text = []
 
 async def main_page(token, message):
     ikb = InlineKeyboardMarkup(row_width=3)
-    url = env('CREATE_VACANCY')
+    url = CREATE_VACANCY
     post_button = InlineKeyboardButton(text="Разместить вакансию",
                                        web_app=WebAppInfo(url=f'{url}{token}'))
     applicants_button = InlineKeyboardButton(text="Мои публикации", callback_data='btn_v')
