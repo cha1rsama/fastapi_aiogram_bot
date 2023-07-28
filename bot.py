@@ -29,7 +29,7 @@ async def start_command(message: types.Message):
     try:
         token = token_get['token']
         await main_page(token, message)
-    except KeyError:
+    except (Exception,):
         user = message.chat.first_name
         await message.answer_photo(photo="AgACAgIAAxkBAAIBSmSNjPd_gFQfDlzl6R4QOL"
                                          "4uRNDNAAJfyTEbYsVoSDNlNDosiUMmAQADAgADeAADLwQ",
