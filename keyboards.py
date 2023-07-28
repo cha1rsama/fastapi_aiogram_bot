@@ -25,7 +25,7 @@ signinmrkp.add(loginbtn, signupbtn)
 
 
 async def ru_btn(callback):
-    await callback.message.edit_media(media=InputMediaPhoto(media="AgACAgIAAxkBAAIOcGSxJZNtJonBUmZwpj1M74mggT5dAAJhyTEbYsVoSLs1E_jxsQ00AQADAgADeAADLwQ"))
+    await callback.message.edit_media(media=InputMediaPhoto(media="https://i.ibb.co/D8M0JY1/photo-2023-07-14-16-18-39.jpg"))
     await callback.message.edit_caption('Спасибо за выбор 🇷🇺\n'
                                         'Давайте разместим вашу вакансию 🧾\n'
                                         'Вам нужно будет всего лишь авторизоваться ниже🔐')
