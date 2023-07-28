@@ -83,6 +83,7 @@ async def web_app(message: types.Message):
     token = data.data.strip("\"")
     if token == 'applicant':
         await message.answer('Упс, к сожалению вы не можете войти как соискатель \nВ скором времени наша команда создаст бота и для соискателей, оставайтесь с нами и мы вам сообшим !')
+        await update_user(chat_id=message.chat.id, token=token)
     else:
         await main_page(token, message)
 
