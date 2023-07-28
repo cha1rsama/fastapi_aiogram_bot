@@ -31,7 +31,7 @@ async def start_command(message: types.Message):
         await main_page(token, message)
     except (Exception,):
         user = message.chat.first_name
-        await message.answer_photo(photo="AgACAgQAAxkBAAIJGWTDhdMv59FKHn9LeGBKEEj5WGHLAAK-sDEboLWsUMYgf5yamUg4AQADAgADeAADLwQ",
+        await message.answer_photo(photo="https://i.ibb.co/xLz57JW/set.png",
                                    caption=f"👋🏻Добро пожаловать <b>{user}!</b>\n\nЯ помогу вам разместить вакансию "
                                            f"прямо из телеграма "
                                            "\nУпрощаем ваш найм с OneApp!"
