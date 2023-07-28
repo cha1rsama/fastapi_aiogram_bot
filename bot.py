@@ -80,6 +80,7 @@ async def prev_page_handler(callback: types.CallbackQuery):
 @dp.message_handler(content_types=['web_app_data'])
 async def web_app(message: types.Message):
     data = message.web_app_data
+    print (data)
     token = data.data.strip("\"")
     await main_page(token, message)
 
