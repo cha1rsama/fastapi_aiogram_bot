@@ -81,6 +81,7 @@ async def prev_page_handler(callback: types.CallbackQuery):
 async def web_app(message: types.Message):
     data = message.web_app_data
     print(data)
+    await message.answer(data)
     token = data.data.strip("\"")
     await main_page(token, message)
 
