@@ -83,7 +83,7 @@ async def web_app(message: types.Message):
     print(data)
     await message.answer(data)
     token = data.data.strip("\"")
-    if token = 'applicant':
+    if token == 'applicant':
         await message.answer('You cant')
     # await main_page(token, message)
 
