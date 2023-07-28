@@ -28,7 +28,10 @@ async def start_command(message: types.Message):
         pass
     try:
         token = token_get['token']
-        await main_page(token, message)
+        if token == 'applicant':
+            raise Exception
+        else:
+            await main_page(token, message)
     except (Exception,):
         user = message.chat.first_name
         await message.answer_photo(photo="https://i.ibb.co/xLz57JW/set.png",
