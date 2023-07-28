@@ -59,7 +59,7 @@ async def login_handler(callback: types.CallbackQuery):
 
 @dp.callback_query_handler(text='ru')
 async def lang_select(callback: types.CallbackQuery):
-    await ru_btn(callback=callback)
+    print(callback)
 
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data.startswith('$'))
