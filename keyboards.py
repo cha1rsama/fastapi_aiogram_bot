@@ -25,8 +25,7 @@ signinmrkp.add(loginbtn, signupbtn)
 
 
 async def ru_btn(callback):
-    await callback.message.edit_media(media=InputMediaPhoto(
-        media="AgACAgIAAxkBAAIOcGSxJZNtJonBUmZwpj1M74mggT5dAAJhyTEbYsVoSLs1E_jxsQ00AQADAgADeAADLwQ"))
+    await callback.message.edit_media(media=InputMediaPhoto(media="AgACAgIAAxkBAAIOcGSxJZNtJonBUmZwpj1M74mggT5dAAJhyTEbYsVoSLs1E_jxsQ00AQADAgADeAADLwQ"))
     await callback.message.edit_caption('Спасибо за выбор 🇷🇺\n'
                                         'Давайте разместим вашу вакансию 🧾\n'
                                         'Вам нужно будет всего лишь авторизоваться ниже🔐')
@@ -36,8 +35,7 @@ async def ru_btn(callback):
 
 
 async def uz_btn(callback):
-    await callback.message.edit_media(media=InputMediaPhoto(media="https://oneapp.ly/_next/static/media"
-                                                                  "/howWorksEmp1.726b8e51.png"))
+    await callback.message.edit_media(media=InputMediaPhoto(media="https://oneapp.ly/_next/static/media/howWorksEmp1.726b8e51.png"))
     await callback.message.edit_caption('Tanlaganiz uchun rahmat 🇺🇿\n'
                                         'Sizga yordam beraman, shu yerda o\'z Vakansiyangizni joylashingiz '
                                         'mumkin🧾\n'
