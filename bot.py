@@ -83,7 +83,7 @@ async def web_app(message: types.Message):
     print(data)
     await message.answer(data)
     token = data.data.strip("\"")
-    await main_page(token, message)
+    # await main_page(token, message)
 
 
 @dp.message_handler(commands=['help'])
