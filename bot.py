@@ -22,7 +22,10 @@ logging.basicConfig(filename='bot.log', level=logging.INFO, format='%(levelname)
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
     token_get = await get_token(message.chat.id)
-    await message.delete()
+    try:
+        await message.delete()
+    except(Exception,):
+        pass
     try:
         token = token_get['token']
         await main_page(token, message)
