@@ -85,7 +85,7 @@ async def web_app(message: types.Message):
     data = message.web_app_data
     token = data.data.strip("\"")
     if token == 'applicant':
-        await message.answer('Упс, к сожалению вы не можете войти как соискатель \nВ скором времени наша команда создаст бота и для соискателей, оставайтесь с нами и мы вам сообшим !')
+        await message.answer('Упс, к сожалению вы не можете войти как соискатель \nВ скором времени наша команда создаст бота и для соискателей, оставайтесь с нами и мы вам сообшим !', reply_markup=ReplyKeyboardRemove())
         await update_user(chat_id=message.chat.id, token=token)
     else:
         await main_page(token, message)
