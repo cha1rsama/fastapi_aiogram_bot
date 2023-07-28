@@ -80,12 +80,11 @@ async def prev_page_handler(callback: types.CallbackQuery):
 @dp.message_handler(content_types=['web_app_data'])
 async def web_app(message: types.Message):
     data = message.web_app_data
-    print(data)
-    await message.answer(data)
     token = data.data.strip("\"")
     if token == 'applicant':
-        await message.answer('You cant')
-    # await main_page(token, message)
+        await message.answer('Упс, к сожалению вы не можете войти как соискатель \nВ скором времени наша команда создаст бота и для соискателей, оставайтесь с нами и мы вам сообшим !')
+    else:
+        await main_page(token, message)
 
 
 @dp.message_handler(commands=['help'])
