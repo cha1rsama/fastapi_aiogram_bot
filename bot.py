@@ -7,7 +7,6 @@ from database.db import add_user, get_token, update_user
 from handlers.handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, main_page
 import pymongo.errors
 import os
-
 HELP_COMMAND = """
 /start - Start the bot
 /help - Commands list

@@ -3,7 +3,6 @@ from aiogram import types, Dispatcher, Bot
 from bot import dp, bot
 import uvicorn
 import os
-
 app = FastAPI()
 token = os.environ.get("TELEGRAM_TOKEN")
 URL = os.environ.get("WEBHOOK_SERVER")
