@@ -93,6 +93,7 @@ async def web_app(message: types.Message):
         await message.answer('Упс, к сожалению вы не можете войти как соискатель \nВ скором времени наша команда создаст бота и для соискателей, оставайтесь с нами и мы вам сообщим !', reply_markup=ReplyKeyboardRemove())
         await update_user(chat_id=message.chat.id, token=token)
     else:
+        await update_user(chat_id=message.chat.id, token=token)
         await main_page(token, message)
 
 
