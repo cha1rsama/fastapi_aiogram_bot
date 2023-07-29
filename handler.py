@@ -35,6 +35,7 @@ async def vacancies(callback):
     markup = InlineKeyboardMarkup()
     for index, item in enumerate(parsed['data']['jobs']):
         try:
+            await callback.message.answer(item)
             title = item['title']
             slug = item['slug']
         except (Exception,):
