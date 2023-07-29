@@ -65,6 +65,10 @@ async def login_handler(callback: types.CallbackQuery):
 async def lang_select(callback: types.CallbackQuery):
     await ru_btn(callback=callback)
 
+@dp.callback_query_handler(text='uz')
+async def lang_select(callback: types.CallbackQuery):
+    await callback.answer(text='Локализация на узбекском языке еще на стадии разработки...')
+
 
 @dp.callback_query_handler(lambda callback_query: callback_query.data.startswith('$'))
 async def applicant_handler(callback: types.CallbackQuery):
