@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from aiogram import types, Dispatcher, Bot
 from bot import dp, bot
-from config.config import WEBHOOK_URL
 import uvicorn
 import os
 
 app = FastAPI()
 token = os.environ.get("TELEGRAM_TOKEN")
+URL = os.environ.get("WEBHOOK_SERVER")
 WEBHOOK_PATH = f"/bot/{token}"
-WEBHOOK_URL = f"{WEBHOOK_URL}{WEBHOOK_PATH}"
+WEBHOOK_URL = f"{URL}{WEBHOOK_PATH}"
 
 
 @app.on_event("startup")
