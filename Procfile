@@ -1,1 +1,1 @@
-worker: python main.py
+worker: python .\fastapi_server\main.py
