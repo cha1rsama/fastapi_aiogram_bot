@@ -121,8 +121,11 @@ async def applicants_list(applicants, callback):
     for i in range(0, len(applicants) + 1, 10):
         database[callback.from_user.id].append(applicants[slice(i, i + 10)])
     # ({f'{callback.from_user.id}': applicants[slice(i, i + 10)]})
-    await callback.message.edit_text(text=message, parse_mode='HTML', disable_web_page_preview=True,
+    try:
+        await callback.message.edit_text(text=message, parse_mode='HTML', disable_web_page_preview=True,
                                      reply_markup=markup)
+    except (Exception,):
+        callback.answer('У вас пока нет откликов, давайте проверим чуть позже')
 
 
 async def next_page(callback):
