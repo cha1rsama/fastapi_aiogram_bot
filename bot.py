@@ -1,4 +1,3 @@
-
 from handlers.keyboards import lang, ru_btn
 import logging
 from aiogram import Bot, Dispatcher, types
@@ -65,6 +64,7 @@ async def login_handler(callback: types.CallbackQuery):
 async def lang_select(callback: types.CallbackQuery):
     await ru_btn(callback=callback)
 
+
 @dp.callback_query_handler(text='uz')
 async def lang_select(callback: types.CallbackQuery):
     await callback.answer(text='Локализация на узбекском языке еще на стадии разработки...')
@@ -90,7 +90,9 @@ async def web_app(message: types.Message):
     data = message.web_app_data
     token = data.data.strip("\"")
     if token == 'applicant':
-        await message.answer('Упс, к сожалению вы не можете войти как соискатель \nВ скором времени наша команда создаст бота и для соискателей, оставайтесь с нами и мы вам сообщим !', reply_markup=ReplyKeyboardRemove())
+        await message.answer(
+            'Упс, к сожалению вы не можете войти как соискатель \nВ скором времени наша команда создаст бота и для соискателей, оставайтесь с нами и мы вам сообщим !',
+            reply_markup=ReplyKeyboardRemove())
         await update_user(chat_id=message.chat.id, token=token)
     else:
         await update_user(chat_id=message.chat.id, token=token)
