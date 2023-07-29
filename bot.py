@@ -1,11 +1,11 @@
 
-from keyboards import lang, ru_btn
+from handlers.keyboards import lang, ru_btn
 import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import ReplyKeyboardRemove
-from db import add_user, get_token, database, update_user
-from handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, text, main_page
+from database.db import add_user, get_token, update_user
+from handlers.handler import applicants_list, applicants_get, vacancies, next_page, storage, prev_page, main_page
 import pymongo.errors
 import os
 

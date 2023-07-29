@@ -3,7 +3,7 @@ import requests
 from aiogram.utils import exceptions
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.types.web_app_info import WebAppInfo
-from db import get_token, database
+from database.db import get_token, database
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 import os
