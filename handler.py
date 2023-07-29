@@ -35,14 +35,13 @@ async def vacancies(callback):
     markup = InlineKeyboardMarkup()
     for index, item in enumerate(parsed['data']['jobs']):
         try:
-            await callback.message.answer(item)
             title = item['title']
             slug = item['slug']
         except (Exception,):
             await callback.message.edit_text('У вас еще нет опубликованных вакансий🥺, давайте разместим ее вместе,'
                                              '\nНажмие на "Разместить вакансию"',
                                              reply_markup=InlineKeyboardMarkup().
-                                             add(InlineKeyboardButton('Назад', callback_data='btn_back')))
+                                             add(InlineKeyboardButton('Назад', callback_data='btn_c')))
             break
         if item['status'] == 'archived':
             jobs.append(f'{title}:{slug}')
@@ -69,7 +68,7 @@ async def main_page(token, message):
                                        url='https://telegra.ph/Kak-razmestit-svoyu-vakansiyu-v-OneApp'
                                            '-06-08')
     help_button = InlineKeyboardButton(text="Помощь", url='https://t.me/oneappsupport2')
-    back_button = InlineKeyboardButton(text="Сменить язык", callback_data='btn_lc')
+    back_button = InlineKeyboardButton(text="Сменить язык", callback_data='uz')
     ikb.add(desc_button, help_button, back_button, post_button, applicants_button)
     await message.answer_photo(photo="https://i.ibb.co/xLz57JW/set.png",
                                caption='Пожалуйста выберите что будем делать дальше 🔽',
