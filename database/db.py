@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 
 cluster = MongoClient(
-    'mongodb+srv://gogikakbarov99:6mwcOy4SfqYfE7kd@cluster0.66u3tri.mongodb.net/?retryWrites=true&w=majority')
-db = cluster['Oneapp_db']
+    'token')
+db = cluster['db']
 collection = db['user_id_chat_id']
 
 # user_token = {}
